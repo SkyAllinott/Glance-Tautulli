@@ -3,11 +3,11 @@
   cache: 30m
   url: http://${TAUTULLI_IP}:${TAUTULLI_PORT}/api/v2?apikey=${TAUTULLI_API_KEY}&cmd=get_home_stats&stat_id=last_watched
   template: |
-    {{ $isLarge := eq "${TAUTULLI_WIDGET_SIZE}" "large" }}
+    {{ $isLarge := eq (.Options.StringOr "size" "large") "large" }}
     {{ $serverID := "${SERVER_ID}" }}
 
 
-    <!-- Widget version when ${TAUTULLI_WIDGET_SIZE}=large-->
+    <!-- Widget version when large-->
     {{ if $isLarge }}
       {{ $rows := .JSON.Array "response.data.rows" }}
 
@@ -50,7 +50,7 @@
           {{ $ratingKey := $v.String "rating_key" }}
 
           <a 
-            href="https://app.plex.tv/desktop/#!/server/{{ $serverID }}/details?key=%2Flibrary%2Fmetadata%2F{{ $ratingKey }}"
+            href="https://app.plex.tv/desktop/#!/server/${SERVER_ID}/details?key=%2Flibrary%2Fmetadata%2F{{ $ratingKey }}"
             target="_blank"
             style=
               "min-width: 160px; 
@@ -129,7 +129,7 @@
 
     {{ else }}
 
-    <!-- Widget version when ${TAUTULLI_WIDGET_SIZE}!=large-->
+    <!-- Widget version when size small-->
     <ul class="list collapsible-container" data-collapse-after="5">
       {{ range $i, $v := .JSON.Array "response.data.rows" }}
         {{ $lastWatch := printf "%d" ($v.Int "last_watch") }}
