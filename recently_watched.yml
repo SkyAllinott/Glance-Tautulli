@@ -5,6 +5,7 @@
   template: |
     {{ $isLarge := eq (.Options.StringOr "size" "large") "large" }}
     {{ $serverID := "${SERVER_ID}" }}
+    {{ $uniqueID := "recently_watched" }}
 
 
     <!-- Widget version when large-->
@@ -14,7 +15,7 @@
 
       <!-- Left scroll arrow -->
       <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <div id="scrollLeft" title = "Scroll left" onclick="document.getElementById('scrollContainer').scrollBy({ left: -150, behavior: 'smooth' })"
+        <div id="scrollLeft-{{ $uniqueID }}" title = "Scroll left" onclick='document.getElementById("scrollContainer-{{ $uniqueID }}").scrollBy({ left: -150, behavior: "smooth" })'
           style="
             flex: 0 0 2.5rem;
             height: 100px;  /* match poster height */
@@ -32,7 +33,7 @@
 
       <!-- Main Content-->
       <div
-        id = "scrollContainer"
+        id="scrollContainer-{{ $uniqueID }}"
         style="
           display: flex;
           overflow-x: auto;
@@ -109,7 +110,7 @@
 
         <!-- Right scroll arrow -->
         <div
-          id="scrollRight"
+          id="scrollRight-{{ $uniqueID }}"
           style="
             flex: 0 0 2.5rem;
             height: 100px;  /* adjust to match poster height */
@@ -121,7 +122,7 @@
             user-select: none;
           "
           title="Scroll right"
-          onclick="document.getElementById('scrollContainer').scrollBy({ left: 150, behavior: 'smooth' })"
+          onclick='document.getElementById("scrollContainer-{{ $uniqueID }}").scrollBy({ left: 150, behavior: "smooth" })'
         >
           <span class = "color-primary" style="font-size: 1.5rem; opacity: 0.7;">➤</span>
         </div>
@@ -153,8 +154,16 @@
                 S{{ ($v.Int "parent_media_index") }}&thinsp;·&thinsp;E{{ ($v.Int "media_index") }}
               </div>
             {{ else if $isMovie }}
-              <div class="color-highlight" title="{{ $v.String "title" }}">
-                {{ $v.String "title" }} ({{ $v.Int "year" }})
+              <div class="color-highlight" 
+                style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" 
+                title="{{ $v.String "title" }}"
+                >
+                {{ $v.String "title" }}
+              </div>
+              <div class="color-highlight" 
+                style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" 
+                >
+                {{ $v.Int "year" }}
               </div>
             {{ end }}
             <div class="color-primary">
