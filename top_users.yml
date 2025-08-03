@@ -12,7 +12,7 @@
   template: |
     {{ $isLarge := eq (.Options.StringOr "size" "large") "large" }}
     {{ $serverID := "${SERVER_ID}" }}
-    {{ $uniqueID := "top_platforms" }}
+    {{ $uniqueID := "top_users" }}
 
 
     <!-- Widget version when large-->
