@@ -74,7 +74,7 @@
 
           
             <div class="color-highlight" 
-              style="margin-top: 0.25rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" 
+              style="margin-top: 0.75rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;" 
               title="{{ $v.String "platform" }}"
               >
               {{ $v.String "platform" }}
